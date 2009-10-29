@@ -24,7 +24,7 @@ jasmine.Reporters.reporter = function(callbacks) {
       that.doCallback(that.callbacks.specCallback, spec);
     },
     log: function (str) {
-      if (console && console.log) console.log(str);
+      if (this.console && this.console.log) this.console.log(str);
     }
   };
 

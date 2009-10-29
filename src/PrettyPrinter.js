@@ -23,7 +23,7 @@ jasmine.PrettyPrinter.prototype.format = function(value) {
       this.emitScalar('undefined');
     } else if (value === null) {
       this.emitScalar('null');
-    } else if (value.navigator && value.frames && value.setTimeout) {
+    } else if (value.navigator /* && value.frames */ && value.setTimeout) {
       this.emitScalar('<window>');
     } else if (value instanceof jasmine.Matchers.Any) {
       this.emitScalar(value.toString());
