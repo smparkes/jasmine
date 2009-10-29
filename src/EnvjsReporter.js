@@ -16,6 +16,7 @@ jasmine.EnvjsReporter.prototype.reportRunnerStarting = function(runner) {
     var suite = suites[i];
     this.suites_.push(this.summarize_(suite));
   }
+  this.startedAt = new Date();
 };
 
 jasmine.EnvjsReporter.prototype.suites = function() {
@@ -55,6 +56,9 @@ jasmine.EnvjsReporter.prototype.reportRunnerResults = function(runner) {
   var specCount = specs.length;
   print();
   var count = 1;
+  var red = "\x1b[31m";
+  var normal = "\x1b[0m";
+  var green = "\x1b[32m";
   for(var i in this.results_) {
     var result = this.results_[i];
     if( result.result ==  "failed" ) {
@@ -64,18 +68,24 @@ jasmine.EnvjsReporter.prototype.reportRunnerResults = function(runner) {
         if( !expectation.passed() ) {
           print();
           print(count++ + ")");
-          print(result.spec.description);
+          print(red+result.spec.description+normal);
           var message;
-          try{
-            message = expectation.message.replace(/(<br \/>)+/g, " ");}catch(e){print(e);}
-          print(message);
+          message = expectation.message.replace(/(<br \/>)+/g, " ");
+          print(red+message+normal);
           print_exception(expectation.trace);
         }
       }
     }
   }
-  var message = "" + specCount + " spec" + (specCount == 1 ? "" : "s" ) + ", " + results.failedCount + " failure" + ((results.failedCount == 1) ? "" : "s");
+  var message = "\nFinished in " + ((new Date().getTime() - this.startedAt.getTime()) / 1000) + "s";
   print(message);
+  message = "\n" + specCount + " spec" + (specCount == 1 ? "" : "s" ) + ", " + results.failedCount + " failure" + ((results.failedCount == 1) ? "" : "s");
+  if(results.failedCount > 0){
+    message = red + message;
+  } else {
+    message = green + message;
+  }
+  print(message+normal);
 };
 
 //noinspection JSUnusedLocalSymbols
@@ -84,7 +94,7 @@ jasmine.EnvjsReporter.prototype.reportSuiteResults = function(suite) {
 
 //noinspection JSUnusedLocalSymbols
 jasmine.EnvjsReporter.prototype.reportSpecResults = function(spec) {
-  puts(spec.results().failedCount > 0 ? "F" : ".");
+  puts(spec.results().failedCount > 0 ? "\x1b[31mF\x1b[0m" : "\x1b[32m.\x1b[0m");
   this.results_[spec.id] = {
     spec: spec,
     messages: spec.results().getItems(),
