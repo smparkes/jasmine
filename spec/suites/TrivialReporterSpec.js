@@ -120,7 +120,7 @@ describe("TrivialReporter", function() {
       trivialReporter.reportSpecResults(spec);
 
       var divs = body.getElementsByTagName("div");
-      expect(divs[3].innerHTML).toEqual("Expected 'a' to be null, but it was not");
+      expect(divs[3].innerText).toEqual("Expected 'a' to be null, but it was not");
     });
   });
 
