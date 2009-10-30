@@ -36,6 +36,7 @@ if(this.Envjs && !jasmine.EnvjsReporter){
     'suites/ExceptionsSpec.js',
     'suites/JsApiReporterSpec.js',
     'suites/MatchersSpec.js',
+    'suites/MockClockSpec.js',
     'suites/MultiReporterSpec.js',
     'suites/NestedResultsSpec.js',
     'suites/PrettyPrintSpec.js',
@@ -46,7 +47,8 @@ if(this.Envjs && !jasmine.EnvjsReporter){
     'suites/SpecRunningSpec.js',
     'suites/SpySpec.js',
     'suites/SuiteSpec.js',
-    'suites/TrivialReporterSpec.js'
+    'suites/TrivialReporterSpec.js',
+    'suites/UtilSpec.js'
   ];
 
   var embedded = window.location != "about:blank";
