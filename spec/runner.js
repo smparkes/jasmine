@@ -19,13 +19,15 @@ if(!this.jasmine){
     load("src/Runner.js");
     load("src/Spec.js");
     load("src/Suite.js");
-    load("src/version.json");
     load("src/WaitsBlock.js");
     load("src/WaitsForBlock.js");
 
     load("lib/TrivialReporter.js");
-    load("src/EnvjsReporter.js");
   })();
+}
+
+if(this.Envjs && !jasmine.EnvjsReporter){
+  load("lib/EnvjsReporter.js");
 }
 
 (function () {
@@ -63,16 +65,13 @@ if(!this.jasmine){
     jasmineEnv.specFilter = function(spec) {
       return trivialReporter.specFilter(spec);
     };
-  } else {
-    var _EnvjsReporter = new jasmine.EnvjsReporter();
-    jasmineEnv.addReporter(_EnvjsReporter);
+  }
+
+  if(embedded && window.Envjs && jasmine.EnvjsReporter){
+    jasmineEnv.addReporter(new jasmine.EnvjsReporter());
   }
 
   window.onload = function() {
     jasmineEnv.execute();
   };
 })();
-
-if(window.location == "about:blank"){
-  window.onload();
-}
