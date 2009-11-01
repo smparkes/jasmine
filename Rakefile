@@ -99,6 +99,7 @@ jasmine.version_= {
 end
 
 task :test do
+  system "echo jazrb " + Dir["spec/**/*[Ss]pec.js"].join(" ")
   system "jazrb " + Dir["spec/**/*[Ss]pec.js"].join(" ")
 end  
 
