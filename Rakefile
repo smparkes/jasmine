@@ -92,3 +92,13 @@ jasmine.version_= {
   end
 
 end
+
+task :test do
+  system "jazrb " + Dir["spec/**/*[Ss]pec.js"].join(" ")
+end  
+
+task :default => :test
+
+# Local Variables:
+# mode:ruby
+# End:
