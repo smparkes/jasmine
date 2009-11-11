@@ -13,10 +13,10 @@ jasmine.unimplementedMethod_ = function() {
 };
 
 /**
- * Large or small values here may result in slow test running & "Too much recursion" errors
+ * Default interval for event loop yields. Small values here may result in slow test running. Zero means no updates until all tests have completed.
  *
  */
-jasmine.UPDATE_INTERVAL = 250;
+jasmine.DEFAULT_UPDATE_INTERVAL = 250;
 
 /**
  * Allows for bound functions to be comapred.  Internal use only.
@@ -178,7 +178,7 @@ jasmine.Spy = function(name) {
    */
   this.isSpy = true;
   /**
-   * The acutal function this spy stubs.
+   * The actual function this spy stubs.
    */
   this.plan = function() {
   };

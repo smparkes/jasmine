@@ -61,7 +61,10 @@ jasmine.version_= {
     require 'jsdoc_helper'
 
 
-    JsdocHelper::Rake::Task.new(:lambda_jsdoc)
+    JsdocHelper::Rake::Task.new(:lambda_jsdoc) do |t|
+      t[:files] = jasmine_sources << 'lib/TrivialReporter.js'
+      t[:options] = "-a"
+    end
     Rake::Task[:lambda_jsdoc].invoke
   end
 
