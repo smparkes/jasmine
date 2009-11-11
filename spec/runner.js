@@ -2,7 +2,6 @@ if(!this.jasmine){
   (function(){
     this.Envjs && this.Envjs.$env && ( this.Envjs.$env.logLevel = this.Envjs.$env.WARNING );
     load("src/base.js");
-    load("src/base.js");
     load("src/util.js");
     load("src/Env.js");
     load("src/Reporter.js");

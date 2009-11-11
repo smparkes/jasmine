@@ -60,7 +60,8 @@ jasmine.ExpectationResult = function(params) {
   this.details = params.details;
   
   this.message = this.passed_ ? 'Passed.' : params.message;
-  this.trace = this.passed_ ? '' : new Error(this.message);
+  this.trace = this.passed_ ? '' :
+    ( params.exception ? params.exception :  new Error(this.message) );
 };
 
 jasmine.ExpectationResult.prototype.passed = function () {
@@ -513,6 +514,11 @@ if (typeof XMLHttpRequest == "undefined") jasmine.XmlHttpRequest = function() {
  * @param {String} url path to the file to include
  * @param {Boolean} opt_global
  */
+
+jasmine._eval = function(__jasmine__) {
+  return (function(){eval(__jasmine__);})();
+};
+
 jasmine.include = function(url, opt_global) {
   if (opt_global) {
     document.write('<script type="text/javascript" src="' + url + '"></' + 'script>');
@@ -526,6 +532,6 @@ jasmine.include = function(url, opt_global) {
       throw new Error("couldn't fetch " + url + ": " + e);
     }
 
-    return eval(xhr.responseText);
+    return jasmine._eval(xhr.responseText);
   }
 };
