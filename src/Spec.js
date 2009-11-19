@@ -62,6 +62,18 @@ jasmine.Spec.prototype.addToQueue = function (block) {
   }
 };
 
+jasmine.Spec.prototype.stop = function(){
+  this.queue._stop();
+}
+
+jasmine.Spec.prototype.start = function(){
+  this.queue._start();
+}
+
+jasmine.Spec.prototype.anticipate = function(number){
+  this._anticipate = number;
+}
+
 jasmine.Spec.prototype.addMatcherResult = function(result) {
   this.results_.addResult(result);
 };

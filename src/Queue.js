@@ -4,6 +4,7 @@ jasmine.Queue = function(env) {
   this.running = false;
   this.index = 0;
   this.offset = 0;
+  this._stopped = 0;
 };
 
 jasmine.Queue.prototype.addBefore = function(block) {
@@ -25,6 +26,18 @@ jasmine.Queue.prototype.start = function(onComplete) {
   this.next_();
 };
 
+jasmine.Queue.prototype._start = function() {
+  var self = this;
+  this._stopped--;
+  if(this._stopped == 0){
+    setTimeout(function(){self.next_();},0);
+  }
+};
+
+jasmine.Queue.prototype._stop = function() {
+  this._stopped++;
+};
+
 jasmine.Queue.prototype.isRunning = function() {
   return this.running;
 };
@@ -35,7 +48,8 @@ jasmine.Queue.prototype.next_ = function() {
   var self = this;
   var goAgain = true;
 
-  while (goAgain) {
+  // debug("stopped",this._stopped,self.index,self.blocks.length);
+  while (goAgain && this._stopped <= 0) {
     goAgain = false;
     
     if (self.index < self.blocks.length) {
@@ -46,6 +60,9 @@ jasmine.Queue.prototype.next_ = function() {
         if (jasmine.Queue.LOOP_DONT_RECURSE && calledSynchronously) {
           completedSynchronously = true;
           return;
+        }
+
+        if( self.blocks[self.index]._anticipate !== undefined ) {
         }
 
         self.offset = 0;

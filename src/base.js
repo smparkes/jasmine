@@ -359,8 +359,8 @@ jasmine.log = function(message) {
  * @param methodName
  * @returns a Jasmine spy that can be chained with all spy methods
  */
-var spyOn = function(obj, methodName) {
-  return jasmine.getEnv().currentSpec.spyOn(obj, methodName);
+var spyOn = function(obj, methodName, ignore) {
+  return jasmine.getEnv().currentSpec.spyOn(obj, methodName, ignore);
 };
 
 /**
@@ -419,6 +419,18 @@ var runs = function(func) {
  */
 var waits = function(timeout) {
   jasmine.getEnv().currentSpec.waits(timeout);
+};
+
+var anticipate = function(number) {
+  jasmine.getEnv().currentSpec.anticipate(number);
+};
+
+var incomplete = function() {
+  jasmine.getEnv().currentSpec.stop();
+};
+
+var complete = function() {
+  jasmine.getEnv().currentSpec.start();
 };
 
 /**
