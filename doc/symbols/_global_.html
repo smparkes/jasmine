@@ -272,9 +272,27 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/_global_.html#anticipate">anticipate</a></b>(number)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/_global_.html#beforeEach">beforeEach</a></b>(beforeEachFunction)
 								</div>
 								<div class="description">A function that is called before each spec in a suite.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/_global_.html#complete">complete</a></b>()
+								</div>
+								<div class="description"></div>
 							</td>
 						</tr>
 					
@@ -299,9 +317,27 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/_global_.html#incomplete">incomplete</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/_global_.html#it">it</a></b>(desc, func)
 								</div>
 								<div class="description">Creates a Jasmine spec that will be added to the current suite.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/_global_.html#pending">pending</a></b>()
+								</div>
+								<div class="description"></div>
 							</td>
 						</tr>
 					
@@ -317,7 +353,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/_global_.html#spyOn">spyOn</a></b>(obj, methodName)
+								<div class="fixedFont"><b><a href="../symbols/_global_.html#spyOn">spyOn</a></b>(obj, methodName, ignore)
 								</div>
 								<div class="description">Function that installs a spy on an existing object's method name.</div>
 							</td>
@@ -421,6 +457,45 @@ Used for restoring any state that is hijacked during spec execution.
 
 					<hr />
 				
+					<a name="anticipate"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>anticipate</b>(number)
+					
+					</div>
+					<div class="description">
+						
+						
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/src_base.js.html">base.js</a>.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>number</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name="beforeEach"> </a>
 					<div class="fixedFont">
 					
@@ -452,6 +527,34 @@ Used for spec setup, including validating assumptions.
 								<dd></dd>
 							
 							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="complete"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>complete</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/src_base.js.html">base.js</a>.
+						
+						
+					</div>
+					
+					
+					
 						
 						
 						
@@ -559,6 +662,34 @@ jasmine.Matchers functions.
 
 					<hr />
 				
+					<a name="incomplete"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>incomplete</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/src_base.js.html">base.js</a>.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name="it"> </a>
 					<div class="fixedFont">
 					
@@ -612,6 +743,34 @@ jasmine.Matchers functions.
 
 					<hr />
 				
+					<a name="pending"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>pending</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+							<br />
+							<i>Defined in: </i> <a href="../symbols/src/src_base.js.html">base.js</a>.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name="runs"> </a>
 					<div class="fixedFont">
 					
@@ -655,7 +814,7 @@ jasmine.Matchers functions.
 					<div class="fixedFont">
 					
 					
-					<b>spyOn</b>(obj, methodName)
+					<b>spyOn</b>(obj, methodName, ignore)
 					
 					</div>
 					<div class="description">
@@ -689,6 +848,12 @@ spyOn(foo, 'not'); // actual foo.not will not be called, execution stops</pre>
 							
 								<dt>
 									<b>methodName</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>ignore</b>
 									
 								</dt>
 								<dd></dd>
@@ -912,7 +1077,7 @@ A convenience method that allows existing specs to be disabled temporarily durin
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Tue Nov 10 2009 17:31:29 GMT-0500 (EST)
+			Documentation generated by <a href="http://www.jsdoctoolkit.org/" target="_blank">JsDoc Toolkit</a> 2.1.0 on Tue Nov 24 2009 15:21:25 GMT-0800 (PST)
 		</div>
 	</body>
 </html>

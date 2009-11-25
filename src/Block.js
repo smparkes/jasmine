@@ -21,7 +21,7 @@ jasmine.Block.prototype.execute = function(onComplete) {
     if(e instanceof jasmine.pending_){
       this.spec.pending = true;
     } else {
-      this.spec.fail(e);
+      this.spec && this.spec.fail(e);
     }
   }
   onComplete();
