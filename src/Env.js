@@ -115,20 +115,21 @@ jasmine.Env.prototype.it = function(description, func) {
   var spec = new jasmine.Spec(this, this.currentSuite, description);
   this.currentSuite.add(spec);
   this.currentSpec = spec;
+  spec.pending = false;
 
   if (func) {
     spec.runs(func);
+  } else {
+    spec.pending = true;
   }
 
   return spec;
 };
 
-jasmine.Env.prototype.xit = function(desc, func) {
-  return {
-    id: this.nextSpecId(),
-    runs: function() {
-    }
-  };
+jasmine.Env.prototype.xit = function(description, func) {
+  var spec = this.it(description, func);
+  spec.pending = true;
+  return spec;
 };
 
 jasmine.Env.prototype.compareObjects_ = function(a, b, mismatchKeys, mismatchValues) {

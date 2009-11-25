@@ -392,6 +392,15 @@ var xit = function(desc, func) {
   return jasmine.getEnv().xit(desc, func);
 };
 
+jasmine.pending_ = function(){
+  Error.call(this,"Pending");
+};
+jasmine.pending_.prototype = new Error;
+
+var pending = function() {
+  throw new jasmine.pending_;
+};
+
 /**
  * Starts a chain for a Jasmine expectation.
  *
