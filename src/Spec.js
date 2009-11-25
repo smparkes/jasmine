@@ -10,11 +10,9 @@ jasmine.Spec = function(env, suite, description) {
   if (!env) {
     throw new Error('jasmine.Env() required');
   }
-  ;
   if (!suite) {
     throw new Error('jasmine.Suite() required');
   }
-  ;
   var spec = this;
   spec.id = env.nextSpecId ? env.nextSpecId() : null;
   spec.env = env;
@@ -105,7 +103,7 @@ jasmine.Spec.prototype.fail = function (e) {
 };
 
 jasmine.Spec.prototype.getMatchersClass_ = function() {
-  return this.matchersClass || jasmine.Matchers;
+  return this.matchersClass || this.env.matchersClass;
 };
 
 jasmine.Spec.prototype.addMatchers = function(matchersPrototype) {
