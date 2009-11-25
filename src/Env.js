@@ -128,7 +128,7 @@ jasmine.Env.prototype.it = function(description, func) {
 
 jasmine.Env.prototype.xit = function(description, func) {
   var spec = this.it(description, func);
-  spec.pending = true;
+  spec.pending = -1;
   return spec;
 };
 

@@ -51,6 +51,7 @@ jasmine.Spec.prototype.getResults = function() {
 jasmine.Spec.prototype.runs = function (func) {
   var block = new jasmine.Block(this.env, func, this);
   this.addToQueue(block);
+  ( this.pending != -1 ) && ( this.pending = false );
   return this;
 };
 

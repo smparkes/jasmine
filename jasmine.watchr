@@ -1,6 +1,7 @@
 #!/usr/bin/env watchr
 
 begin; require 'watchr/event_handlers/em'; rescue LoadError; end
+begin; require 'watchr/deps'; rescue LoadError; end
 
 # p "reload"
 
@@ -44,7 +45,9 @@ jazrb = lambda do |*args|
     end
   end
   if !files.empty?
-    cmd = "jazrb #{files.join(" ")}"
+    deps = ""
+    begin deps = "--deps #{db_path}"; rescue; end
+    cmd = "jazrb #{deps} #{files.join(" ")}"
     puts cmd
     system cmd
     # puts "exit status: #{$?.exitstatus}" if $?.exited? && $?.exitstatus != 0
