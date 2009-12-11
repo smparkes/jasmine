@@ -32,9 +32,25 @@ jasmine.Queue.prototype._start = function() {
   if(this._stopped == 0){
     setTimeout(function(){self.next_();},0);
   }
+  if(this._timeout){
+    var undefined;
+    clearTimeout(this._timeout);
+    this._timeout = undefined;
+  }
 };
 
-jasmine.Queue.prototype._stop = function() {
+jasmine.Queue.prototype._stop = function(delay) {
+  var self = this;
+  delay = delay || 2000;
+  if(this._timeout){
+    clearTimeout(this._timeout);
+  };
+  this._timeout = setTimeout(function test_timeout(){
+    self.blocks[0].spec.runs(function(){
+      self.blocks[0].spec.expect("test").toComplete();
+    });
+    self._start();
+  },delay);
   this._stopped++;
 };
 

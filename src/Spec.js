@@ -61,8 +61,8 @@ jasmine.Spec.prototype.addToQueue = function (block) {
   }
 };
 
-jasmine.Spec.prototype.stop = function(){
-  this.queue._stop();
+jasmine.Spec.prototype.stop = function(delay){
+  this.queue._stop(delay);
 }
 
 jasmine.Spec.prototype.start = function(){

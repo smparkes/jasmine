@@ -311,7 +311,21 @@ jasmine.createSpy = function(name) {
     spyObj.mostRecentCall.args = args;
     spyObj.argsForCall.push(args);
     spyObj.calls.push({object: this, args: args});
-    return spyObj.plan.apply(this, arguments);
+    if(this instanceof arguments.callee) {
+      var a = arguments;
+      var array = ["new spyObj.plan("];
+      for(var i=0; i < a.length; i++){
+        if(i>0){
+          array.push(",");
+        }
+        array.push("a[", i, "]");
+      }
+      array.push(")");
+      var string = array.join("");
+      return eval(string);
+    } else {
+      return spyObj.plan.apply(this, arguments);
+    }
   };
 
   var spy = new jasmine.Spy(name);
@@ -444,8 +458,8 @@ var anticipate = function(number) {
   jasmine.getEnv().currentSpec.anticipate(number);
 };
 
-var incomplete = function() {
-  jasmine.getEnv().currentSpec.stop();
+var incomplete = function(delay) {
+  jasmine.getEnv().currentSpec.stop(delay);
 };
 
 var complete = function() {

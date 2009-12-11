@@ -60,6 +60,14 @@ jasmine.Matchers.matcherFn_ = function(matcherName, matcherFunction) {
 
 
 /**
+ * toComplete: synthetic matcher for async test timeouts
+ */
+
+jasmine.Matchers.prototype.toComplete = function() {
+  return false;
+};
+
+/**
  * toBe: compares the actual to the expected using ===
  * @param expected
  */
