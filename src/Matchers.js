@@ -281,7 +281,7 @@ jasmine.Matchers.prototype.toThrow = function(expected) {
 
   this.message = function(expected) {
     var exception = getException_(this.actual, expected);
-    if (exception && (expected === jasmine.undefined || !this.env.equals_(exception.message || exception, expected.message || expected))) {
+    if (exception && expected !== jasmine.undefined && (!this.env.equals_(exception.message || exception, expected.message || expected))) {
       return ["Expected function to throw", expected.message || expected, ", but it threw", exception.message || exception  ].join(' ');
     } else {
       return "Expected function to throw an exception.";
