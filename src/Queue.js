@@ -33,9 +33,8 @@ jasmine.Queue.prototype._start = function() {
     setTimeout(function(){self.next_();},0);
   }
   if(this._timeout){
-    var undefined;
     clearTimeout(this._timeout);
-    this._timeout = undefined;
+    this._timeout = jasmine.undefined;
   }
 };
 
@@ -78,7 +77,7 @@ jasmine.Queue.prototype.next_ = function() {
           return;
         }
 
-        if( self.blocks[self.index]._anticipate !== undefined ) {
+        if( self.blocks[self.index]._anticipate !== jasmine.undefined ) {
         }
 
         self.offset = 0;

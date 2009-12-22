@@ -121,17 +121,17 @@ jasmine.Matchers.prototype.toNotMatch = function(expected) {
 };
 
 /**
- * Matcher that compares the actual to undefined.
+ * Matcher that compares the actual to jasmine.undefined.
  */
 jasmine.Matchers.prototype.toBeDefined = function() {
-  return (this.actual !== undefined);
+  return (this.actual !== jasmine.undefined);
 };
 
 /**
- * Matcher that compares the actual to undefined.
+ * Matcher that compares the actual to jasmine.undefined.
  */
 jasmine.Matchers.prototype.toBeUndefined = function() {
-  return (this.actual === undefined);
+  return (this.actual === jasmine.undefined);
 };
 
 /**
@@ -206,10 +206,26 @@ jasmine.Matchers.prototype.wasCalledWith = function() {
   }
 
   this.message = function() {
-    return "Expected spy to have been called with " + jasmine.pp(arguments) + " but was called with " + jasmine.pp(this.actual.argsForCall);
+    if (this.actual.callCount == 0) {
+      return "Expected spy to have been called with " + jasmine.pp(arguments) + " but it was never called.";
+    } else {
+      return "Expected spy to have been called with " + jasmine.pp(arguments) + " but was called with " + jasmine.pp(this.actual.argsForCall);
+    }
   };
 
   return this.env.contains_(this.actual.argsForCall, jasmine.util.argsToArray(arguments));
+};
+
+jasmine.Matchers.prototype.wasNotCalledWith = function() {
+  if (!jasmine.isSpy(this.actual)) {
+    throw new Error('Expected a spy, but got ' + jasmine.Matchers.pp(this.actual) + '.');
+  }
+
+  this.message = function() {
+    return "Expected spy not to have been called with " + jasmine.pp(arguments) + " but it was";
+  };
+
+  return !this.env.contains_(this.actual.argsForCall, jasmine.util.argsToArray(arguments));
 };
 
 /**
@@ -260,12 +276,12 @@ jasmine.Matchers.prototype.toThrow = function(expected) {
   var result = false;
   var exception = getException_(this.actual, expected);
   if (exception) {
-    result = (expected === undefined || this.env.equals_(exception.message || exception, expected.message || expected));
+    result = (expected === jasmine.undefined || this.env.equals_(exception.message || exception, expected.message || expected));
   }
 
   this.message = function(expected) {
     var exception = getException_(this.actual, expected);
-    if (exception && (expected === undefined || !this.env.equals_(exception.message || exception, expected.message || expected))) {
+    if (exception && (expected === jasmine.undefined || !this.env.equals_(exception.message || exception, expected.message || expected))) {
       return ["Expected function to throw", expected.message || expected, ", but it threw", exception.message || exception  ].join(' ');
     } else {
       return "Expected function to throw an exception.";
