@@ -14,7 +14,7 @@ jasmine.Block = function(env, func, spec) {
 
 jasmine.Block.prototype.execute = function(onComplete) {  
   try {
-    if(!this.spec.pending){
+    if(!this.spec.pending || this.is_after){
       this.func.apply(this.spec);
     }
   } catch (e) {

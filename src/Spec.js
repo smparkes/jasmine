@@ -168,15 +168,21 @@ jasmine.Spec.prototype.addBeforesAndAftersToQueue = function() {
     this.queue.addBefore(new jasmine.Block(this.env, runner.before_[i], this));
   }
   for (i = 0; i < this.afterCallbacks.length; i++) {
-    this.queue.add(new jasmine.Block(this.env, this.afterCallbacks[i], this));
+    var block = new jasmine.Block(this.env, this.afterCallbacks[i], this);
+    block.is_after = true;
+    this.queue.add(block);
   }
   for (suite = this.suite; suite; suite = suite.parentSuite) {
     for (var i = 0; i < suite.after_.length; i++) {
-      this.queue.add(new jasmine.Block(this.env, suite.after_[i], this));
+      var block = new jasmine.Block(this.env, suite.after_[i], this);
+      block.is_after = true;
+      this.queue.add(block);
     }
   }
   for (var i = 0; i < runner.after_.length; i++) {
-    this.queue.add(new jasmine.Block(this.env, runner.after_[i], this));
+    var block = new jasmine.Block(this.env, runner.after_[i], this);
+    block.is_after = true;
+    this.queue.add(block);
   }
 };
 
