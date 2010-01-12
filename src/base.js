@@ -433,6 +433,11 @@ var pending = function() {
   throw new jasmine.pending_;
 };
 
+jasmine.eventually_ = function(){
+  Error.call(this,"Eventually");
+};
+jasmine.eventually_.prototype = new Error;
+
 /**
  * Starts a chain for a Jasmine expectation.
  *
@@ -472,6 +477,14 @@ var incomplete = function(delay) {
 
 var complete = function() {
   jasmine.getEnv().currentSpec.start();
+};
+
+var eventually = function(fn) {
+  jasmine.getEnv().currentSpec.eventually(fn);
+};
+
+var wait_for = function(condition,fn) {
+  jasmine.getEnv().currentSpec.wait_for(condition,fn);
 };
 
 /**
