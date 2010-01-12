@@ -78,3 +78,22 @@ jasmine.NestedResults.prototype.addResult = function(result) {
 jasmine.NestedResults.prototype.passed = function() {
   return this.passedCount === this.totalCount;
 };
+
+jasmine.NestedResults.prototype.block_start = function() {
+  this.block_totalCount = this.totalCount;
+  this.block_passedCount = this.passedCount;
+  this.block_failedCount = this.failedCount;
+  this.block_skipped = this.skipped;
+  this.items_length = this.items_.length;
+};
+
+jasmine.NestedResults.prototype.block_finish = function() {
+};
+
+jasmine.NestedResults.prototype.block_abort = function() {
+  this.totalCount = this.block_totalCount;
+  this.passedCount = this.block_passedCount;
+  this.failedCount = this.block_failedCount;
+  this.skipped = this.block_skipped;
+  this.items_ = this.items_.slice(0,this.items_length);
+}

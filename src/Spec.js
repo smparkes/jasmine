@@ -49,7 +49,7 @@ jasmine.Spec.prototype.getResults = function() {
 jasmine.Spec.prototype.runs = function (func) {
   var block = new jasmine.Block(this.env, func, this);
   this.addToQueue(block);
-  ( this.pending != -1 ) && ( this.pending = false );
+  ( this.pending != -1 ) && ( !this.queue.isRunning() ) && ( this.pending = false );
   return this;
 };
 
@@ -63,15 +63,28 @@ jasmine.Spec.prototype.addToQueue = function (block) {
 
 jasmine.Spec.prototype.stop = function(delay){
   this.queue._stop(delay);
-}
+};
 
 jasmine.Spec.prototype.start = function(){
   this.queue._start();
-}
+};
+
+jasmine.Spec.prototype.eventually = function(func){
+  // this.queue._eventually(fn);
+  var block = new jasmine.Block(this.env, func, this);
+  block.is_eventual = true;
+  this.addToQueue(block);
+  ( this.pending != -1 ) && ( this.pending = false );
+  return this;
+};
+
+jasmine.Spec.prototype.wait_for = function(condition,fn){
+  this.queue._wait_for(condition,fn);
+};
 
 jasmine.Spec.prototype.anticipate = function(number){
   this._anticipate = number;
-}
+};
 
 jasmine.Spec.prototype.addMatcherResult = function(result) {
   this.results_.addResult(result);
@@ -159,28 +172,33 @@ jasmine.Spec.prototype.execute = function(onComplete) {
 
 jasmine.Spec.prototype.addBeforesAndAftersToQueue = function() {
   var runner = this.env.currentRunner();
+  var block;
   for (var suite = this.suite; suite; suite = suite.parentSuite) {
     for (var i = 0; i < suite.before_.length; i++) {
-      this.queue.addBefore(new jasmine.Block(this.env, suite.before_[i], this));
+      block = new jasmine.Block(this.env, suite.before_[i], this);
+      block.is_before = true;
+      this.queue.addBefore(block);
     }
   }
   for (var i = 0; i < runner.before_.length; i++) {
-    this.queue.addBefore(new jasmine.Block(this.env, runner.before_[i], this));
+    block = new jasmine.Block(this.env, runner.before_[i], this);
+    block.is_before = true;
+    this.queue.addBefore(block);
   }
   for (i = 0; i < this.afterCallbacks.length; i++) {
-    var block = new jasmine.Block(this.env, this.afterCallbacks[i], this);
+    block = new jasmine.Block(this.env, this.afterCallbacks[i], this);
     block.is_after = true;
     this.queue.add(block);
   }
   for (suite = this.suite; suite; suite = suite.parentSuite) {
     for (var i = 0; i < suite.after_.length; i++) {
-      var block = new jasmine.Block(this.env, suite.after_[i], this);
+      block = new jasmine.Block(this.env, suite.after_[i], this);
       block.is_after = true;
       this.queue.add(block);
     }
   }
   for (var i = 0; i < runner.after_.length; i++) {
-    var block = new jasmine.Block(this.env, runner.after_[i], this);
+    block = new jasmine.Block(this.env, runner.after_[i], this);
     block.is_after = true;
     this.queue.add(block);
   }
@@ -223,3 +241,14 @@ jasmine.Spec.prototype.removeAllSpies = function() {
   this.spies_ = [];
 };
 
+jasmine.Spec.prototype.block_start = function() {
+  this.results_.block_start();
+};
+
+jasmine.Spec.prototype.block_finish = function() {
+  this.results_.block_finish();
+};
+
+jasmine.Spec.prototype.block_abort = function() {
+  this.results_.block_abort();
+};

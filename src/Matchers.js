@@ -29,6 +29,11 @@ jasmine.Matchers.matcherFn_ = function(matcherName, matcherFunction) {
     var matcherArgs = jasmine.util.argsToArray(arguments);
     var result = matcherFunction.apply(this, arguments);
     var message;
+    // debug("m",matcherFunction+"",this.spec.is_eventual);
+    if (!result && this.spec.is_eventual){
+      // debug('retry');
+      throw new jasmine.eventually_;
+    }
     if (!result) {
       if (this.message) {
         message = this.message.apply(this, arguments);
