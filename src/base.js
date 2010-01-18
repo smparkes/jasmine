@@ -91,10 +91,11 @@ jasmine.getEnv = function() {
  */
 jasmine.isArray_ = function(value) {
   return value &&
-         typeof value === 'object' &&
-         typeof value.length === 'number' &&
-         typeof value.splice === 'function' &&
-         !(value.propertyIsEnumerable('length'));
+          ( value instanceof Array  || (
+            typeof value === 'object' &&
+              typeof value.length === 'number' &&
+              ( typeof value.splice === 'function' || value.callee || value.item  )  &&
+              !(value.propertyIsEnumerable('length')) ) );
 };
 
 /**
