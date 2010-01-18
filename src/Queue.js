@@ -23,6 +23,7 @@ jasmine.Queue.prototype.insertNext = function(block) {
 jasmine.Queue.prototype.start = function(onComplete) {
   this.running = true;
   this.onComplete = onComplete;
+  // debug("next_ !!!");
   this.next_();
 };
 
@@ -31,9 +32,13 @@ jasmine.Queue.prototype._start = function() {
   var self = this;
   this._stopped--;
   // debug("start " + this._stopped);
-  if(this._stopped == 0){
+  if(this._stopped == 0 && !this._signaled){
+    this._signaled = true;
     // debug("next_ !!");
-    setTimeout(function(){self.next_();},0);
+    setTimeout(function(){
+      self._signaled = false;
+      self.next_();
+    },0);
   }
   if(this._timeout){
     clearTimeout(this._timeout);
@@ -126,18 +131,23 @@ jasmine.Queue.prototype.next_ = function() {
         self.index++;
 
         var now = new Date().getTime();
-        if (self.env.updateInterval && now - self.env.lastUpdate > self.env.updateInterval) {
-          self.env.lastUpdate = now;
-          // debug("next_ 00");
-          self.env.setTimeout(function() {
-            self.next_();
-          }, 0);
-        } else {
-          if (jasmine.Queue.LOOP_DONT_RECURSE && completedSynchronously) {
-            goAgain = true;
+        if(!self._signaled){
+          if (self.env.updateInterval && now - self.env.lastUpdate > self.env.updateInterval) {
+            self.env.lastUpdate = now;
+            // debug("next_ 00");
+            this._signaled = true;
+            self.env.setTimeout(function() {
+              this._signaled = false;
+              self.next_();
+            }, 0);
           } else {
-            // debug("next_ 01");
-            self.next_();
+            if (jasmine.Queue.LOOP_DONT_RECURSE && completedSynchronously) {
+              // debug("go again");
+              goAgain = true;
+            } else {
+              // debug("next_ 01");
+              self.next_();
+            }
           }
         }
       };
