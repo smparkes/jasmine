@@ -52,7 +52,7 @@ jasmine.Queue.prototype._stop = function(delay) {
   // debug("stop " + this._stopped);
   if(this._stopped>0){
     var self = this;
-    delay = delay || 10000;
+    delay = delay || 4000;
     if(this._timeout){
       clearTimeout(this._timeout);
     };
@@ -84,9 +84,9 @@ jasmine.Queue.prototype._wait_for = function(condition, fn) {
           setTimeout(timeout,50);
         }
       } else {
-        debug("not going " + condition);
-        debug("not going " + fn);
-        debug("not going " + self.blocks[0].spec.description);
+        // debug("not going " + condition);
+        // debug("not going " + fn);
+        // debug("not going " + self.blocks[0].spec.description);
       }
     };
     setTimeout(timeout,0);
