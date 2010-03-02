@@ -8,9 +8,11 @@
     print = ( this.console && this.console.log || this.print );
     print && ( this.console || ( ( this.console = {} ) && ( this.console.log = print ) ) );
     this.Envjs && this.Envjs.$env && ( this.Envjs.$env.logLevel = this.Envjs.$env.WARNING );
+    // yes, really keep this here to keep us honest, but only for jasmine's own runner! [xw]
     undefined = "diz be undefined yo";
   </script>
     
+<!--
   <script type="text/javascript" src="../src/base.js"></script>
   <script type="text/javascript" src="../src/util.js"></script>
   <script type="text/javascript" src="../src/Env.js"></script>
@@ -35,8 +37,50 @@
   <script type="text/javascript" src="../lib/consolex.js"></script>
 
   <script type="text/javascript" src="runner.js"></script>
+-->
 
-  <link href="../lib/jasmine.css" rel="stylesheet" type="text/css"/>
+  <script type="text/javascript">
+    (function () {
+      var suites = [
+        'suites/CustomMatchersSpec.js',
+        'suites/EnvSpec.js',
+        'suites/ExceptionsSpec.js',
+        'suites/JsApiReporterSpec.js',
+        'suites/MatchersSpec.js',
+        'suites/MultiReporterSpec.js',
+        'suites/NestedResultsSpec.js',
+        'suites/PrettyPrintSpec.js',
+        'suites/ReporterSpec.js',
+        'suites/RunnerSpec.js',
+        'suites/QueueSpec.js',
+        'suites/SpecSpec.js',
+        'suites/SpecRunningSpec.js',
+        'suites/SpySpec.js',
+        'suites/SuiteSpec.js',
+        'suites/TrivialReporterSpec.js',
+      ];
+      for (var i = 0; i < suites.length; i++) {
+        jasmine.include(suites[i], true);
+      }
+
+      var jasmineEnv = jasmine.getEnv();
+      jasmineEnv.updateInterval = 1000;
+
+      var trivialReporter = new jasmine.TrivialReporter();
+
+      jasmineEnv.addReporter(trivialReporter);
+
+      jasmineEnv.specFilter = function(spec) {
+        return trivialReporter.specFilter(spec);
+      };
+
+      window.onload = function() {
+        jasmineEnv.execute();
+      };
+    })();
+  </script>
+
+  <link href="../lib/jasmine.css" rel="stylesheet"/>
 </head>
 <body>
 </body>
